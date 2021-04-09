@@ -1,6 +1,6 @@
 <!--
  * @file: 埋点工具
- * @author: liyunkun(liyunkun@baidu.com)
+ * @author: yili109@outlook.com
 -->
 1、百度统计接入网站
 [百度统计](https://tongji.baidu.com/)
