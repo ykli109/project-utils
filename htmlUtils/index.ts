@@ -82,3 +82,33 @@ export const removeStyle = (html: string, exceptTags: string[] = []) => {
 
     return removeStyle(result, exceptTags);
 }
+
+// 获取鼠标选中区域内的文字、html，判断是否在指定的元素内
+export const getMouseSelect = parentEle => {
+    const selector = window.getSelection();
+    const selectText = selector.toString();
+
+    // 判断选中内容是否在约定的父节点内
+    const startNode = selector.anchorNode;
+    const endNode = selector.focusNode;
+    const parentText = parentEle ? parentEle.innerText : '';
+    const isPartInside = parentEle && parentEle.contains(startNode) || parentEle.contains(endNode);
+    const isAllInside = parentEle && parentEle.contains(startNode) && parentEle.contains(endNode);
+    const isTextInside = selectText && parentText.replace(/\s/g, '').includes(selectText.replace(/\s/g, ''));
+    const isInside = isAllInside || (isPartInside && isTextInside);
+
+    // 获取选中的html
+    const selectEle = selector.getRangeAt(0) && selector.getRangeAt(0).cloneContents();
+    const container = document.createElement('div');
+    selectEle && container.appendChild(selectEle);
+
+    let html = '';
+    if (parentEle && container.innerHTML.includes(parentEle.innerHTML)) {
+        html = parentEle.innerHTML;
+    }
+    else {
+        html = container.innerHTML;
+    }
+
+    return {selectText, selectHtml: html, isInside};
+};
