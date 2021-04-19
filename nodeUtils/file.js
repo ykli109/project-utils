@@ -29,3 +29,10 @@ function cleanEmptyFolders(folder) {
         console.log('removed: ', folder);
     }
 };
+
+// 读取json文件
+const readJson = filepath => {
+    const output = fs.readFileSync(filepath).toString();
+
+    return JSON.parse(output);
+};
